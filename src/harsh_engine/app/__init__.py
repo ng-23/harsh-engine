@@ -14,6 +14,8 @@ load_dotenv()
 def create_app():
     app = Flask(__name__)
     app.config["DATABASE"] = os.getenv("DATABASE")
+    app.config["N_DUMMY_USERS"] = int(os.getenv("N_DUMMY_USERS"))
+    app.config["SEED"] = int(os.getenv("SEED"))
 
     with app.app_context():
         database.init_db(
