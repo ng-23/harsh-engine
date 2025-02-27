@@ -1,5 +1,5 @@
 import os
-from ptrs.app import database
+from harsh_engine.app import database
 from flask import Flask, render_template
 from dotenv import load_dotenv
 
