@@ -8,8 +8,9 @@ charset-normalizer==3.4.1
 click==8.1.8
 cryptography==44.0.0
 cssselect2==0.7.0
+Faker==36.1.1
 Flask==3.1.0
--e git+https://github.com/ng-23/harsh-engine.git@ac00487b322b88c33ed6640be718cd71370a61eb#egg=harsh_engine
+-e git+https://github.com/ng-23/harsh-engine.git@1cfbeb8ec88c4dd2a1077e8d16957ff368dc5769#egg=harsh_engine
 html5lib==1.1
 idna==3.10
 itsdangerous==2.2.0
@@ -32,6 +33,7 @@ requests==2.32.3
 six==1.17.0
 svglib==1.5.1
 tinycss2==1.4.0
+tzdata==2025.1
 tzlocal==5.2
 uritools==4.0.3
 urllib3==2.3.0
