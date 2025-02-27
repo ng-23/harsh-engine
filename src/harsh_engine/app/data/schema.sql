@@ -4,7 +4,7 @@ CREATE TABLE users (
     id INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
     password TEXT NOT NULL,
-    join_time DATETIME NOT NULL,
-    last_seen_time DATETIME NOT NULL
+    join_time INTEGER NOT NULL,
+    last_seen_time INTEGER NOT NULL
 );
 
