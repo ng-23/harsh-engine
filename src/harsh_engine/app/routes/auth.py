@@ -1,4 +1,4 @@
-from flask import Blueprint, request, flash, render_template, url_for, g, redirect
+from flask import Blueprint, request, flash, render_template, g, redirect, session
 from harsh_engine.app import database
 from harsh_engine.app.model import entities, data_mappers
 import hashlib
@@ -48,12 +48,17 @@ def login():
         user_mapper.db = g.db
 
         res = user_mapper.read_by_credentials(username, hashlib.md5(password.encode('utf-8')).hexdigest())
-        users = res.data
+
+        if res.valid:
+            users = res.data
+            if len(users) == 0:
+                flash('Invalid username/password')
+                return redirect('/')
+
+            flash([user.to_json() for user in users])
+            return render_template('home.html')
+        else:
+            flash(res.message) # there was an error of some sort
         
-        if len(users) == 0:
-            flash('Invalid username/password')
-            return redirect('/')
+        return redirect('/')
 
-        flash([user.to_json() for user in users])
-
-    return render_template('home.html')
