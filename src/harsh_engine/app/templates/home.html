@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Harsh Engine</title>
+</head>
+
+<body>
+    <p style="font-size: large;">System Messages: </p>
+    {% for message in get_flashed_messages() %}
+    <p style="color: red;">{{ message }}</p>
+    {% endfor %}
+</body>

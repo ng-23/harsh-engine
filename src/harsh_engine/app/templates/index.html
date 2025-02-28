@@ -4,5 +4,47 @@
     <title>Harsh Engine</title>
 </head>
 
-<body>  
+<body>
+    <p style="font-size: x-large;">Welcome to Harsh Engine!</p>
+
+    <br>
+
+    <p style="font-size: large;">Register</p>
+    <form action="/auth/register" method="post">
+        <label for="username">Username:</label>
+        <br>
+        <input type="text" name="username">
+        <br><br>
+        <label for="password">Password:</label>
+        <br>
+        <input type="text" name="password">
+        <br><br>
+        <input type="submit" value="Register">
+    </form>
+
+    <br>
+    <hr>
+    <br>
+
+    <p style="font-size: large;">Login</p>
+    <form action="/auth/login" method="post">
+        <label for="username">Username:</label>
+        <br>
+        <input type="text" name="username">
+        <br><br>
+        <label for="password">Password:</label>
+        <br>
+        <input type="text" name="password">
+        <br><br>
+        <input type="submit" value="Log in">
+    </form>
+
+    <br>
+    <hr>
+    <br>
+
+    <p style="font-size: large;">System Messages: </p>
+    {% for message in get_flashed_messages() %}
+    <p style="color: red;">{{ message }}</p>
+    {% endfor %}
 </body>
