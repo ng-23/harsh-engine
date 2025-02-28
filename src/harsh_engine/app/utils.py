@@ -13,8 +13,8 @@ class ModelState:
     valid: bool = False
     message: str = ""
     data: List[any] = field(default_factory=list) # see https://stackoverflow.com/questions/53632152/why-cant-dataclasses-have-mutable-defaults-in-their-class-attributes-declaratio
-    errors: List[Exception] = field(default_factory=list)  
-
+    errors: List[Exception] = field(default_factory=list)
+    
 def generate_dummy_users(n_users=10, seed=42):
     '''
     Generates `n_users` dummy/mock users
