@@ -13,6 +13,7 @@ load_dotenv()
 
 def create_app():
     app = Flask(__name__)
+    app.secret_key = os.getenv('SECRET_KEY') # see https://stackoverflow.com/questions/63189783/the-session-is-unavailable-because-no-secret-key-was-set
     app.config["DATABASE"] = os.getenv("DATABASE")
     app.config["N_DUMMY_USERS"] = int(os.getenv("N_DUMMY_USERS"))
     app.config["SEED"] = int(os.getenv("SEED"))
@@ -29,5 +30,8 @@ def create_app():
     @app.route("/about/")
     def about():
         return render_template('about.html')
+    
+    from .routes import auth
+    app.register_blueprint(auth.bp)
 
     return app
