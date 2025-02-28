@@ -56,9 +56,44 @@ class UserMapper(SQLiteDataMapper):
         super().__init__(enable_foreign_keys)
 
     def create(self, user:entities.User):
+        '''
+        Create a new user in the database
+        '''
+
+        res = None
+
         stmt = """INSERT INTO users (username,password,join_time,last_seen_time) VALUES (?,?,?,?)"""
         
-        user_id = super()._exec_dml_command(stmt, args=user.to_tuple(incld_id=False, dt_to_unix=True), do_insert=True)
-        
-        return utils.ModelState(valid=True, message=f'Successfully created new User with id {user_id}', data=[user])
+        try:
+            user_id = super()._exec_dml_command(stmt, args=user.to_tuple(incld_id=False, dt_to_unix=True), do_insert=True)
+            res = utils.ModelState(valid=True, message=f'Successfully created new user with ID {user_id} and username {user.username}', data=[user])
+        except Exception as e:
+            if type(e) == sqlite3.IntegrityError:
+                res = utils.ModelState(valid=False, message=f'Username {user.username} already taken', data=[e])
+            else:
+                res = utils.ModelState(valid=False, message=str(e), data=[e])
+
+        return res
+    
+    def read_by_credentials(self, username:str, password_hash:str):
+        '''
+        Read a user from the database based on their username and password hash
+        '''
+
+        stmt = f'SELECT * FROM users WHERE username = \'{username}\' AND password = \'{password_hash}\''
+
+        try:
+            records = super()._exec_dql_command(
+                stmt, 
+                args=tuple(), 
+                return_one=False
+                )
+
+            users = [entities.User(**dict(record)) for record in records]
+            res = utils.ModelState(valid=True, message=f"Found {len(users)} users matching query", data=users)
+        except Exception as e:
+            res = utils.ModelState(valid=False, message=str(e), data=[e])
+            
+        return res
+
     
