@@ -83,17 +83,39 @@ class UserMapper(SQLiteDataMapper):
         stmt = f'SELECT * FROM users WHERE username = \'{username}\' AND password = \'{password_hash}\''
 
         try:
-            records = super()._exec_dql_command(
+            records = self._exec_dql_command(
                 stmt, 
                 args=tuple(), 
-                return_one=False
+                return_one=True
                 )
+            
+            if len(records) > 0:
+                user = entities.User(**dict(records))
+            else:
+                user = None
 
-            users = [entities.User(**dict(record)) for record in records]
-            res = utils.ModelState(valid=True, message=f"Found {len(users)} users matching query", data=users)
+            res = utils.ModelState(valid=True, message=f"Found {len(records)} user(s) matching query", data=[] if user is None else [user])
         except Exception as e:
             res = utils.ModelState(valid=False, message=str(e), data=[e])
             
+        return res
+    
+    def read_by_id(self, user_id:int):
+        '''
+        Read a user from the database based on their unique numeric ID
+        '''
+
+        stmt = 'SELECT * FROM users WHERE id = ?'
+
+        try:
+            records = self._exec_dql_command(stmt, args=(user_id,), return_one=True)
+
+            user = entities.User(**dict(records))
+
+            res = utils.ModelState(valid=True, message=f"Found 1 user matching query", data=[user])
+        except Exception as e:
+            res = utils.ModelState(valid=False, message=str(e), data=[e])
+
         return res
 
     
