@@ -27,7 +27,7 @@
     <br>
 
     <p style="font-size: large;">Login</p>
-    <form action="/auth/login" method="post">
+    <form action="{{ url_for('auth.login') }}" method="post">
         <label for="username">Username:</label>
         <br>
         <input type="text" name="username">
@@ -37,6 +37,15 @@
         <input type="text" name="password">
         <br><br>
         <input type="submit" value="Log in">
+    </form>
+
+    <br>
+    <hr>
+    <br>
+
+    <p style="font-style: large;">Logout</p>
+    <form action="{{ url_for('auth.logout') }}" method="post">
+        <input type="submit" value="Logout">
     </form>
 
     <br>

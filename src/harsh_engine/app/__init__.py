@@ -34,4 +34,9 @@ def create_app():
     from .routes import auth
     app.register_blueprint(auth.bp)
 
+    @app.route('/home')
+    @auth.login_required
+    def home():
+        return render_template('home.html')
+
     return app
