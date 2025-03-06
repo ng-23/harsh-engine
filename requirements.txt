@@ -10,20 +10,24 @@ cryptography==44.0.0
 cssselect2==0.7.0
 Faker==36.1.1
 Flask==3.1.0
--e git+https://github.com/ng-23/harsh-engine.git@1cfbeb8ec88c4dd2a1077e8d16957ff368dc5769#egg=harsh_engine
+-e git+https://github.com/ng-23/harsh-engine.git@a4bdd5772e7e59ef92158459bf69730ce650cd46#egg=harsh_engine
 html5lib==1.1
 idna==3.10
+iniconfig==2.0.0
 itsdangerous==2.2.0
 Jinja2==3.1.5
 lxml==5.3.0
 MarkupSafe==3.0.2
 oscrypto==1.3.0
+packaging==24.2
 pillow==11.0.0
+pluggy==1.5.0
 -e git+https://github.com/ng-23/ptrs.git@2e671918405e06794345821cc97141d070190ccd#egg=ptrs
 pycparser==2.22
 pyHanko==0.25.3
 pyhanko-certvalidator==0.26.5
 pypdf==5.1.0
+pytest==8.3.5
 python-bidi==0.6.3
 python-dotenv==1.0.1
 PyYAML==6.0.2
