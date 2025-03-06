@@ -13,9 +13,9 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        database.get_db()
+        database.get_db_conn()
         user_mapper = data_mappers.UserMapper()
-        user_mapper.db = g.db
+        user_mapper.db_conn = g.db_conn_conn
 
         res = user_mapper.read_by_id(user_id)
 
@@ -57,9 +57,9 @@ def register():
 
         res = None
         if error is None:
-            database.get_db()
+            database.get_db_conn()
             user_mapper = data_mappers.UserMapper()
-            user_mapper.db = g.db
+            user_mapper.db_conn = g.db_conn
             res = user_mapper.create(user)
 
         if res is not None and not res.valid:
@@ -75,9 +75,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        database.get_db()
+        database.get_db_conn()
         user_mapper = data_mappers.UserMapper()
-        user_mapper.db = g.db
+        user_mapper.db_conn = g.db_conn
 
         res = user_mapper.read_by_credentials(username, hashlib.md5(password.encode('utf-8')).hexdigest())
 
