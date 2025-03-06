@@ -14,11 +14,21 @@ class Entity:
             return False
 
         return True
+    
+    @classmethod
+    def has_properties(cls, property_names:list[str]):
+        has_props = []
 
-    def to_tuple(self):
+        for property_name in property_names:
+            if cls.has_property(property_name):
+                has_props.append(property_name)
+
+        return set(has_props)
+
+    def to_tuple(self, **kwargs):
         return tuple(vars(self).values())
 
-    def to_json(self):
+    def to_json(self, **kwargs):
         res = {}
 
         for attr in vars(type(self)):
@@ -97,16 +107,19 @@ class User(Entity):
     def id(self, id:int|None = None):
         self._id = id
 
-    def to_tuple(self, incld_id:bool=False, dt_to_unix:bool=True):
-        attrs = list(super().to_tuple())
+    def to_tuple(self, excld_props:set[str]={}, dt_to_unix:bool=False, **kwargs):
+        attrs = self.to_json()
+
+        for prop in excld_props:
+            attrs.pop(prop)
 
         if dt_to_unix:
             # see https://stackoverflow.com/a/47525387
             join_time, last_seen_time = calendar.timegm(self.join_time.timetuple()), calendar.timegm(self.last_seen_time.timetuple())
-            attrs[3] = join_time
-            attrs[4] = last_seen_time
-        
-        if not incld_id:
-            attrs = attrs[1:]
+            
+            if 'join_time' in attrs:
+                attrs['join_time'] = join_time
+            if 'last_seen_time' in attrs:
+                attrs['last_seen_time'] = last_seen_time
 
-        return tuple(attrs)
+        return tuple(attrs.values())
